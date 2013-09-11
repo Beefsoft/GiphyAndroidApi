@@ -1,4 +1,5 @@
-package com.acdroid.giphyapi.utils;
+
+package com.beefsoft.giphyapi.utils;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -31,28 +32,34 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * FetchInfoTask is a AsyncTask wrapper to fetch information using http. Override the setResult to get the
- * result of the task. Override the setError to get an advise when an error occur.<br>
+ * FetchInfoTask is a AsyncTask wrapper to fetch information using http.
+ * Override the setResult to get the result of the task. Override the setError
+ * to get an advise when an error occur.<br>
  * <p>
- * If the fetched information is a Json and you want to receive the json parsed extends this class with the
- * Result class assigned (Should be different from String)<br>
- * <b>To parse the JSON uses the library Jackson, you should add this library to your project</b>
+ * If the fetched information is a Json and you want to receive the json parsed
+ * extends this class with the Result class assigned (Should be different from
+ * String)<br>
+ * <b>To parse the JSON uses the library Jackson, you should add this library to
+ * your project</b>
  * <p>
  * Usage:
  * <ul>
  * <li>Extends this class.
- * <li>Override the {@link #setResult(Object) and {@link #onError(int, String)} methods
+ * <li>Override the {@link #setResult(Object) and {@link #onError(int, String)}
+ * methods
  * <li>Execute it with:
  * <em>new CustomClass&lt;ResultType&gt;(url).enableJsonParsing(result.class).executeFetch();</em>
  * </ul>
  * <p>
- * If the fetched information is other than Json, like XML, you can set an interface to parse the result and
- * receive the information parsed on the onResult method. <br>
+ * If the fetched information is other than Json, like XML, you can set an
+ * interface to parse the result and receive the information parsed on the
+ * onResult method. <br>
  * <p>
  * Usage:
  * <ul>
  * <li>Extends this class.
- * <li>Override the {@link #setResult(Object) and {@link #onError(int, String)} methods
+ * <li>Override the {@link #setResult(Object) and {@link #onError(int, String)}
+ * methods
  * <li>Execute it with:
  * <em>new CustomClass&lt;ResultType&gt;(url).enableCustonParsing(FetchInfoParser).executeFetch();</em>
  * </ul>
@@ -91,7 +98,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
     protected static final int ERROR_JSON_MAPPING = 2;
     protected static final int ERROR_IO_EXCEPTION = 505;
 
-    private Class<?> mJsonObjectClass = null; // .class to parse the result with Jackson
+    private Class<?> mJsonObjectClass = null; // .class to parse the result with
+                                              // Jackson
     private FetchInfoParser<Result> mParser = null;
     private static ObjectMapper mMapper;
     private int mType = TYPE_DEFAULT;
@@ -103,7 +111,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
     }
 
     /**
-     * Default FetchInfoTask builder The HTTP connection will be a <em>HTTP GET</em>
+     * Default FetchInfoTask builder The HTTP connection will be a
+     * <em>HTTP GET</em>
      * 
      * @param url EndPoint where is the information
      */
@@ -154,7 +163,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
     }
 
     /**
-     * For DDMS Connection stats purposes. Sets the tag. The tags normally are like 0xF00D
+     * For DDMS Connection stats purposes. Sets the tag. The tags normally are
+     * like 0xF00D
      * 
      * @param tag
      */
@@ -217,19 +227,23 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
             }
 
             if (infoFetched instanceof FetchInfoTask.FetchInfoError) {
-                onError(((FetchInfoError) infoFetched).mValue, ((FetchInfoError) infoFetched).mMessage);
+                onError(((FetchInfoError) infoFetched).mValue,
+                        ((FetchInfoError) infoFetched).mMessage);
                 return null;
             }
 
             // When no need to parse the info fetched, return the String
             if (mJsonObjectClass != null) {
                 // Other cases, parse the info with Jackson
-                if (mMapper == null) mMapper = new ObjectMapper();
+                if (mMapper == null)
+                    mMapper = new ObjectMapper();
                 Result r = (Result) mMapper.readValue((String) infoFetched, mJsonObjectClass);
                 return r;
             }
 
-            if (mParser != null) { return mParser.onParse((String) infoFetched); }
+            if (mParser != null) {
+                return mParser.onParse((String) infoFetched);
+            }
 
             return (Result) infoFetched;
 
@@ -239,7 +253,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
             onError(ERROR_JSON_PARSE, "JsonParseException " + e.getMessage());
             e.printStackTrace();
         } catch (JsonMappingException e) {
-            onError(ERROR_JSON_MAPPING, "JsonMappingException, some of the values is not well mapped");
+            onError(ERROR_JSON_MAPPING,
+                    "JsonMappingException, some of the values is not well mapped");
             e.printStackTrace();
         } catch (IOException e) {
             onError(ERROR_IO_EXCEPTION, "IOException: " + e.getMessage());
@@ -252,15 +267,18 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
 
     @Override
     protected void onPostExecute(Result result) {
-        if (result == null) { return; }
+        if (result == null) {
+            return;
+        }
 
         onResult(result);
     }
 
     /**
-     * Override this method to get and manage the result of fetching the info. The specified parameter is the
-     * parameter passed to {@link FetchInfoTask} when instantiate it. If the type of FethcInfoTask is If the
-     * FetchInfoTask type is {@link #TYPE_FETCH_JSON} the result will be a Result parsed.
+     * Override this method to get and manage the result of fetching the info.
+     * The specified parameter is the parameter passed to {@link FetchInfoTask}
+     * when instantiate it. If the type of FethcInfoTask is If the FetchInfoTask
+     * type is {@link #TYPE_FETCH_JSON} the result will be a Result parsed.
      * 
      * @param params The parameters of the result task
      * @see #setResult(Object)
@@ -271,7 +289,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
     protected abstract void onError(int type, String message);
 
     /**
-     * Response Handler that manages the result of the connection execution Returns the fetch info or result
+     * Response Handler that manages the result of the connection execution
+     * Returns the fetch info or result
      */
     private final ResponseHandler<Object> mResponseHandler = new ResponseHandler<Object>() {
 
@@ -352,7 +371,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
     }
 
     /**
-     * Make a Synchronous Http Get petition to the url and usePARSE the {@link ResponseHandler}
+     * Make a Synchronous Http Get petition to the url and usePARSE the
+     * {@link ResponseHandler}
      * 
      * @param endPoint Url to make the get petition
      * @param responseHandler
@@ -361,7 +381,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
     protected Object httpGetPetition(String endPoint, ResponseHandler<?> responseHandler)
             throws IOException, ClientProtocolException {
         // HttpClient
-        // final DefaultHttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+        // final DefaultHttpClient httpClient =
+        // HttpClientFactory.getThreadSafeClient();
         final DefaultHttpClient httpClient = new DefaultHttpClient();
 
         HttpParams params = httpClient.getParams();
@@ -412,8 +433,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
     }
 
     /**
-     * A nested class to get an singleton/instance of DefaultHTTPClient. Is ThreadSafe Tested and fail!! Need
-     * more test
+     * A nested class to get an singleton/instance of DefaultHTTPClient. Is
+     * ThreadSafe Tested and fail!! Need more test
      * 
      * @author Marcos Trujillo
      */
@@ -434,7 +455,8 @@ public abstract class FetchInfoTask<Result> extends AsyncTask<String, Void, Resu
             HttpProtocolParams.setUseExpectContinue(params, true);
 
             ClientConnectionManager mgr = mHttpClient.getConnectionManager();
-            mHttpClient = new DefaultHttpClient(new ThreadSafeClientConnManager(params, mgr.getSchemeRegistry()),
+            mHttpClient = new DefaultHttpClient(new ThreadSafeClientConnManager(params,
+                    mgr.getSchemeRegistry()),
                     params);
 
             return mHttpClient;
