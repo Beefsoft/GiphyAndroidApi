@@ -1,9 +1,9 @@
 
-package com.acdroid.giphyapi;
+package com.beefsoft.giphyapi;
 
-import com.acdroid.giphyapi.data.GiphyInfo;
-import com.acdroid.giphyapi.data.GiphyInfo.GifInfo;
-import com.acdroid.giphyapi.utils.FetchInfoTask;
+import com.beefsoft.giphyapi.data.GiphyInfo;
+import com.beefsoft.giphyapi.data.GiphyInfo.GifInfo;
+import com.beefsoft.giphyapi.utils.FetchInfoTask;
 
 import android.util.Log;
 

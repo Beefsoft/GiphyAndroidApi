@@ -1,5 +1,5 @@
 
-package com.acdroid.giphyapi.view;
+package com.beefsoft.giphyapi.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
