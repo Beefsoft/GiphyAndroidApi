@@ -1,4 +1,5 @@
-package com.acdroid.giphyapi.data;
+
+package com.beefsoft.giphyapi.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,22 +9,22 @@ import java.util.ArrayList;
 /**
  * Bean with the info retrieved from the server
  * 
- * @author Marcos Trujillo 
+ * @author Marcos Trujillo
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GiphyInfo {
     @JsonProperty("data")
-    public ArrayList<GifInfo> gifList= new ArrayList<GifInfo>();
+    public ArrayList<GifInfo> gifList = new ArrayList<GifInfo>();
     @JsonProperty("meta")
     public Meta meta;
-	
-	@Override
+
+    @Override
     public String toString() {
         return "GiphyInfo [gifList=" + gifList + ", meta=" + meta + "]";
     }
-    
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-	public static class GifInfo{
+    public static class GifInfo {
         @JsonProperty("type")
         public String type;
         @JsonProperty("id")
@@ -42,8 +43,7 @@ public class GiphyInfo {
         public String importDate;
         @JsonProperty("images")
         public GifImages gifImages;
-        
-        
+
         @Override
         public String toString() {
             return "GifInfo [type=" + type + ", id=" + id + ", url=" + url + ", urlBitly="
@@ -51,20 +51,19 @@ public class GiphyInfo {
                     + urlBitlyTiled + ", urlEmbed=" + urlEmbed + ", importDate=" + importDate
                     + ", gifImages=" + gifImages + "]";
         }
-	}
-    
+    }
+
     /**
-     * 
-     * @author Marcos Trujillo 
+     * @author Marcos Trujillo
      */
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class GifImages{
+    public static class GifImages {
         @JsonProperty("fixed_height")
         public GifImage imageFixedHeight;
         @JsonProperty("fixed_height_still")
         public GifImage imageFixedHeightStill;
         @JsonProperty("fixed_height_downsampled")
-        public GifImage imageFixedHeightDownsampled;        
+        public GifImage imageFixedHeightDownsampled;
         @JsonProperty("fixed_width")
         public GifImage imageFixedWidth;
         @JsonProperty("fixed_width_still")
@@ -73,8 +72,7 @@ public class GiphyInfo {
         public GifImage imageFixedWidthDownsampled;
         @JsonProperty("original")
         public GifImage imageOriginal;
-        
-        
+
         @Override
         public String toString() {
             return "GifImages [imageFixedHeight=" + imageFixedHeight + ", imageFixedHeightStill="
@@ -85,13 +83,12 @@ public class GiphyInfo {
                     + ", imageOriginal=" + imageOriginal + "]";
         }
     }
-    
+
     /**
-     * 
-     * @author Marcos Trujillo 
+     * @author Marcos Trujillo
      */
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class GifImage{
+    public static class GifImage {
         @JsonProperty("url")
         public String url;
         @JsonProperty("width")
@@ -102,47 +99,43 @@ public class GiphyInfo {
         public String size;
         @JsonProperty("frames")
         public String frames;
-        
+
         public String getUrl() {
             return url;
         }
-        
+
         public void setUrl(String url) {
             this.url = url;
         }
-        
+
         public int getWidth() {
-            try{
+            try {
                 return Integer.parseInt(width);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 return 0;
             }
         }
-        
+
         public void setWidth(String width) {
             this.width = width;
         }
-        
 
         public int getHeight() {
-            try{
+            try {
                 return Integer.parseInt(height);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 return 0;
             }
         }
-        
+
         public void setHeight(String height) {
             this.height = height;
         }
 
-        public int getSize(){
-            try{
+        public int getSize() {
+            try {
                 return Integer.parseInt(size);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 return 0;
             }
         }
@@ -150,12 +143,11 @@ public class GiphyInfo {
         public void setSize(String size) {
             this.size = size;
         }
-       
+
         public int getFrames() {
-            try{
+            try {
                 return Integer.parseInt(frames);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 return 0;
             }
         }
@@ -170,16 +162,14 @@ public class GiphyInfo {
                     + size + ", frames=" + frames + "]";
         }
     }
-    
-    
-    
+
     /**
      * Meta info of the GhiphyInfo
      * 
      * @author Marcos Trujillo
      */
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Meta{
+    public static class Meta {
         @JsonProperty("msg")
         public String message;
         @JsonProperty("status")
@@ -190,8 +180,7 @@ public class GiphyInfo {
         public Integer code;
         @JsonProperty("error_message")
         public String errorMessage;
-        
-        
+
         @Override
         public String toString() {
             return "Meta [message=" + message + ", status=" + status + ", errorType=" + errorType
